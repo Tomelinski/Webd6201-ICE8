@@ -3,6 +3,7 @@
 //IIFE - Immediatly invoked function expression
 
 "use strict";
+
 (function () {
   function Start() {
     console.log("App started...");

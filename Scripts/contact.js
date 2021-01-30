@@ -70,7 +70,12 @@ class Contact {
      * @memberof Contact
      */
     serialize(){
-        return`${this.m_fullName},${this.m_contactNumber},${this.m_emailAddress}`;
+        if(this.FullName !== "" && this.contactNumber !== "" && this.email !== ""){
+            return `${this.m_fullName},${this.m_contactNumber},${this.m_emailAddress}`;
+        } else {
+            console.error("contact is empty");
+            return null;
+        }
     }
 
     /**
@@ -81,8 +86,8 @@ class Contact {
      */
     deserialize(data){
         let propertyArray = data.split(",");
-        this.fullName = propertyArray[0];
-        this.contactNumber = propertyArray[1];
-        this.email = propertyArray[2];
+        this.FullName = propertyArray[0];
+        this.ContactNumber = propertyArray[1];
+        this.Email = propertyArray[2];
     }
   }

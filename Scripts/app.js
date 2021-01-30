@@ -43,6 +43,7 @@
         fullName.addEventListener("blur", function(){
             if(fullName.value.length < 2){
                 //fullName.focus();
+                //fullName.select();
                 messageArea.hidden = false;
                 messageArea.textContent = "Please enter a valid name";
             }else{
@@ -51,10 +52,14 @@
 
             let sendButton = document.getElementById("sendButton");
             sendButton.addEventListener("click", function(event){
-                event.preventDefault();
+                //event.preventDefault();
 
                 let contact = new Contact(fullName.value, contactNumber.value, email.value);
-                console.log(contact.toString());
+                if (contact.serialize()){
+                  localStorage.setItem((localStorage.length + 1).toString(), contact.serialize())
+                }
+                  
+                
             });
         });
     }
@@ -65,6 +70,29 @@
         
     }
 
+    function displayContactList() {
+      if (localStorage.length > 0) {
+        let contactList = document.getElementById("contactList");
+        let data = "";
+
+        for (let index = 0; index < localStorage.length; index++) {
+          let contactData = localStorage.getItem((index + 1).toString());
+          let contact = new Contact();
+
+          contact.deserialize(contactData);
+
+          data += `<tr>
+            <th scope="row">${index + 1}</th>
+            <td>${contact.FullName}</td>
+            <td>${contact.ContactNumber}</td>
+            <td>${contact.EmailAddress}</td>
+          </tr>`;
+        }
+
+        contactList.innerHTML = data;
+      }
+    }
+
     switch (document.title) {
       case "Home":
           displayHome();
@@ -72,11 +100,14 @@
       case "About":
         break;
       case "Contact":
-        displayContact()
+        displayContact();
         break;
       case "Services":
         break;
       case "Projects":
+        break;
+        case "Contact-List":
+          displayContactList();
         break;
     }
 

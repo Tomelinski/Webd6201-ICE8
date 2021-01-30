@@ -3,6 +3,18 @@
 //IIFE - Immediatly invoked function expression
 
 "use strict";
+class Contact {
+    constructor(fullName, contactNumber, emailAddress) {
+        this.m_fullName = fullName;
+        this.m_contactNumber = contactNumber;
+        this.m_emailAddress = emailAddress;
+    }
+    toString() {
+        return `Full Name: ${this.m_fullName} 
+Contact Number: ${this.m_contactNumber}
+Email Address: ${this.m_emailAddress}`;
+    }
+}
 
 (function () {
   function Start() {
@@ -52,6 +64,9 @@
             let sendButton = document.getElementById("sendButton");
             sendButton.addEventListener("click", function(event){
                 event.preventDefault();
+
+                let contact = new Contact(fullName.value, contactNumber.value, email.value);
+                console.log(contact.toString());
             });
         });
     }

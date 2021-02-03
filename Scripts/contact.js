@@ -20,7 +20,6 @@ class Contact {
     set EmailAddress(value) {
       this.m_emailAddress = value;
     }
-  
     
     /**
      * contact class

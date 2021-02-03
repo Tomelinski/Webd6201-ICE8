@@ -4,33 +4,41 @@
 
 "use strict";
 
-(function () {
+const { start } = require("@popperjs/core");
+
+((core) => {
   function Start() {
     console.log("App started...");
 
-    function displayHome(){
-    let paragraphOneText = "Welcome to my ICE site test";
+    function displayHome() {
 
-    let paragraphOne = document.getElementById("paragraphOne");
+      $("h1").on("click", function(){
+        console.log("h1 clicked");
+      });
 
-    paragraphOne.textContent = paragraphOneText;
-    paragraphOne.className = "fs-5";
 
-    let newParagraph = document.createElement("p");
+      let paragraphOneText = "Welcome to my ICE site test";
 
-    newParagraph.setAttribute("id", "paragraphTwo");
-    newParagraph.textContent = "... and this is Paragraphg two";
+      let paragraphOne = document.getElementById("paragraphOne");
 
-    let mainContent = document.getElementsByTagName("main")[0];
+      paragraphOne.textContent = paragraphOneText;
+      paragraphOne.className = "fs-5";
 
-    mainContent.appendChild(newParagraph);
-    newParagraph.className = "fs-6";
+      let newParagraph = document.createElement("p");
 
-    let paragraphDiv = document.createElement('div');
-    let paragraphThree = `<p id="paragraphThree" class="fs-7">This is paragraph three</p>`;
-    paragraphDiv.innerHTML = paragraphThree;
+      newParagraph.setAttribute("id", "paragraphTwo");
+      newParagraph.textContent = "... and this is Paragraphg two";
 
-    newParagraph.before(paragraphDiv);
+      let mainContent = document.getElementsByTagName("main")[0];
+
+      mainContent.appendChild(newParagraph);
+      newParagraph.className = "fs-6";
+
+      let paragraphDiv = document.createElement("div");
+      let paragraphThree = `<p id="paragraphThree" class="fs-7">This is paragraph three</p>`;
+      paragraphDiv.innerHTML = paragraphThree;
+
+      newParagraph.before(paragraphDiv);
     }
     function displayAbout(){
         
@@ -54,7 +62,7 @@
             sendButton.addEventListener("click", function(event){
                 //event.preventDefault();
 
-                let contact = new Contact(fullName.value, contactNumber.value, email.value);
+                let contact = new core.Contact(fullName.value, contactNumber.value, email.value);
                 if (contact.serialize()){
                   localStorage.setItem((localStorage.length + 1).toString(), contact.serialize())
                 }
@@ -77,7 +85,7 @@
 
         for (let index = 0; index < localStorage.length; index++) {
           let contactData = localStorage.getItem((index + 1).toString());
-          let contact = new Contact();
+          let contact = new core.Contact();
 
           contact.deserialize(contactData);
 
@@ -115,4 +123,6 @@
   }
 
   window.addEventListener("load", Start);
-})();
+
+  core.Start = Start;
+})(core || (core = {}));

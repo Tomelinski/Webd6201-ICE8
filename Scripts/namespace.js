@@ -1,0 +1,3 @@
+//namespace code
+
+let core;

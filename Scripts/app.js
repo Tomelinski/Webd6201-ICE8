@@ -39,27 +39,20 @@
     }
     function displayContact(){
 
-      $("#messageArea").hide();
+      let messageArea = $("#messageArea").hide();
 
-      $("#fullName").on("blur", () => {
+      $("#fullName").on("blur", function(){
 
-        if ( $("#fullName").val().length < 2) {
-          //$("#fullName").trigger("focus");
-          //$("#fullName").trigger("select");
+        if ( $(this).val().length < 2) {
+          //$(this).trigger("focus").trigger("select");
 
-          $("#messageArea").show();
-          $("#messageArea").addClass("alert alert-danger");
-          $("#messageArea").text("Please enter a valid name");
+          messageArea.show().addClass("alert alert-danger").text("Please enter a valid name");
         } else {
-          $("#messageArea").removeAttr("class");
-          $("#messageArea").hide();
+          messageArea.removeAttr("class").hide();
         }
       });
 
-      let sendButton = document.getElementById("sendButton");
-      sendButton.addEventListener("click", function (event) {
-        //event.preventDefault();
-
+      $("#sendButton").on("click", ()=>{
         let contact = new core.Contact(
           fullName.value,
           contactNumber.value,
@@ -73,6 +66,7 @@
         }
       });
     }
+
     function displayServices(){
         
     }

@@ -53,17 +53,22 @@
       });
 
       $("#sendButton").on("click", ()=>{
-        let contact = new core.Contact(
-          fullName.value,
-          contactNumber.value,
-          email.value
-        );
-        if (contact.serialize()) {
-          localStorage.setItem(
-            (localStorage.length + 1).toString(),
-            contact.serialize()
+        if($("#subsribeCheckBox")[0].checked){
+
+          let contact = new core.Contact(
+            fullName.value,
+            contactNumber.value,
+            email.value
           );
-        }
+            
+            
+            if (contact.serialize()) {
+              localStorage.setItem(
+                (localStorage.length + 1).toString(),
+                contact.serialize()
+              );
+            }
+          }
       });
     }
 

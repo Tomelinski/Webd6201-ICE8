@@ -63,8 +63,9 @@
             
             
             if (contact.serialize()) {
+              let key = contact.FullName.substring(0,1) + Date.now();
               localStorage.setItem(
-                (localStorage.length + 1).toString(),
+                key,
                 contact.serialize()
               );
             }
@@ -82,39 +83,75 @@
     function displayContactList() {
       if (localStorage.length > 0) {
         let contactList = document.getElementById("contactList");
+
         let data = "";
 
-        for (let index = 0; index < localStorage.length; index++) {
-          let contactData = localStorage.getItem((index + 1).toString());
+        let keys = Object.keys(localStorage);
+
+        let index = 0;
+
+        for (const key of keys) {
+          let contactData = localStorage.getItem(key);
           let contact = new core.Contact();
 
           contact.deserialize(contactData);
 
           data += `<tr>
-            <th scope="row">${index + 1}</th>
+            <th scope="row">${index}</th>
             <td>${contact.FullName}</td>
             <td>${contact.ContactNumber}</td>
             <td>${contact.EmailAddress}</td>
-            <td class="text-center"><button value="${index + 1}" class="btn btn-primary btn-sm edit"><i class="fas fa-edit fa-sm"></i> Edit</button></td>
-            <td class="text-center"><button value="${index + 1}" class="btn btn-danger btn-sm delete"><i class="fas fa-trash-alt fa-sm"></i> Delete</button></td>
+            <td class="text-center"><button value="${key}" class="btn btn-primary btn-sm edit"><i class="fas fa-edit fa-sm"></i> Edit</button></td>
+            <td class="text-center"><button value="${key}" class="btn btn-danger btn-sm delete"><i class="fas fa-trash-alt fa-sm"></i> Delete</button></td>
           </tr>`;
-        
+
+          index ++;
         }
         
         contactList.innerHTML = data;
         
         $("button.edit").on("click", function(){
-          console.log($(this).val());
+          location.href = "edit.html#" + $(this).val();
         });
         //fix list when deleting
         $("button.delete").on("click", function(){
           if(confirm("Are you sure?")){
             localStorage.removeItem($(this).val());
-            location.href = "contact-list.html";
-
           }
+          location.href = "contact-list.html";
         });
       }
+    }
+
+    function displayEdit(){
+      let key = location.hash.substring(1);
+
+      let contact = new core.Contact();
+
+      if (key != ""){
+        contact.deserialize(localStorage.getItem(key));
+        
+        $("#fullName").val(contact.FullName);
+        $("#contactNumber").val(contact.ContactNumber);
+        $("#email").val(contact.Email);
+      }
+
+      $("#editButton").on("click", function(){
+        if(key == ""){
+          key = contact.FullName.substring(0,1) + Date.now();
+        }
+
+        contact.FullName = $("#fullName").val();
+        contact.FullName = $("#contactNumber").val();
+        contact.FullName = $("#email").val();
+
+        localStorage.setItem(key, contact.serialize());
+        location.href = "contact-list.html";
+      });
+
+      $("#cancelButton").on("click", function(){
+        location.href = "contact-list.html";
+      });
     }
 
     switch (document.title) {
@@ -130,8 +167,11 @@
         break;
       case "Projects":
         break;
-        case "Contact-List":
-          displayContactList();
+      case "Contact-List":
+        displayContactList();
+        break;
+      case "Edit":
+        displayEdit();
         break;
     }
 

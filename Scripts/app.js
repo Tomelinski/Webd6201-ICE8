@@ -121,6 +121,10 @@
           location.href = "contact-list.html";
         });
       }
+
+      $("#addButton").on("click", function(){
+        location.href = "edit.html";
+      });
     }
 
     function displayEdit(){
@@ -134,6 +138,11 @@
         $("#fullName").val(contact.FullName);
         $("#contactNumber").val(contact.ContactNumber);
         $("#email").val(contact.Email);
+      }
+      else
+      {
+        $("main>h1").text("Add Contact");
+        $("#editButton").html(`<i class="fas fa-plus fa-lg"></i> Add`);
       }
 
       $("#editButton").on("click", function(){

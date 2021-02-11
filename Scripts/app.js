@@ -37,20 +37,68 @@
     function displayAbout(){
         
     }
-    function displayContact(){
 
+    function testFullName(){
       let messageArea = $("#messageArea").hide();
-
+  
+      let fullNamePattern = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+  
       $("#fullName").on("blur", function(){
-
-        if ( $(this).val().length < 2) {
+  
+        if (!fullNamePattern.test($(this).val())) {
           //$(this).trigger("focus").trigger("select");
-
-          messageArea.show().addClass("alert alert-danger").text("Please enter a valid name");
+  
+          messageArea.show().addClass("alert alert-danger").text("Please enter a valid full name");
         } else {
           messageArea.removeAttr("class").hide();
         }
       });
+
+    }
+
+    function textContactNumber(){
+      let messageArea = $("#messageArea").hide();
+  
+      let contactNumberPattern = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+  
+      $("#contactNumber").on("blur", function(){
+  
+        if (!contactNumberPattern.test($(this).val())) {
+          //$(this).trigger("focus").trigger("select");
+  
+          messageArea.show().addClass("alert alert-danger").text("Please enter a valid contact number");
+        } else {
+          messageArea.removeAttr("class").hide();
+        }
+      });
+    }
+
+    function textEmailAddress(){
+      let messageArea = $("#messageArea").hide();
+  
+      let emailAddressPattern = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+  
+      $("#email").on("blur", function(){
+  
+        if (!emailAddressPattern.test($(this).val())) {
+          //$(this).trigger("focus").trigger("select");
+  
+          messageArea.show().addClass("alert alert-danger").text("Please enter a valid email address");
+        } else {
+          messageArea.removeAttr("class").hide();
+        }
+      });
+    }
+
+    function formValidation(){
+      testFullName();
+      textContactNumber();
+      textEmailAddress();
+
+    }
+
+    function displayContact(){
+      formValidation();
 
       $("#sendButton").on("click", ()=>{
         if($("#subsribeCheckBox")[0].checked){
@@ -76,6 +124,7 @@
     function displayServices(){
         
     }
+
     function displayProjects(){
         
     }
@@ -144,6 +193,8 @@
         $("main>h1").text("Add Contact");
         $("#editButton").html(`<i class="fas fa-plus fa-lg"></i> Add`);
       }
+
+      formValidation();
 
       $("#editButton").on("click", function(){
         if(key == ""){

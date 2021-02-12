@@ -61,7 +61,7 @@
         return{
             "firstName":this.fullName,
             "contactNumber":this.contactNumber,
-            "email":this.email,
+            "email":this.emailAddress,
         }
     }
 
@@ -72,7 +72,7 @@
      * @memberof Contact
      */
     serialize(){
-        if(this.FullName !== "" && this.contactNumber !== "" && this.email !== ""){
+        if(this.FullName !== "" && this.contactNumber !== "" && this.emailAddress !== ""){
             return `${this.m_fullName},${this.m_contactNumber},${this.m_emailAddress}`;
         } else {
             console.error("contact is empty");
@@ -90,7 +90,7 @@
         let propertyArray = data.split(",");
         this.FullName = propertyArray[0];
         this.ContactNumber = propertyArray[1];
-        this.Email = propertyArray[2];
+        this.EmailAddress = propertyArray[2];
     }
   }
 

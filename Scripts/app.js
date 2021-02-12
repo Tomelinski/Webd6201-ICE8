@@ -59,7 +59,7 @@
     function textContactNumber(){
       let messageArea = $("#messageArea").hide();
   
-      let contactNumberPattern = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+      let contactNumberPattern = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
   
       $("#contactNumber").on("blur", function(){
   
@@ -76,7 +76,7 @@
     function textEmailAddress(){
       let messageArea = $("#messageArea").hide();
   
-      let emailAddressPattern = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+      let emailAddressPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
   
       $("#email").on("blur", function(){
   
@@ -186,7 +186,7 @@
         
         $("#fullName").val(contact.FullName);
         $("#contactNumber").val(contact.ContactNumber);
-        $("#email").val(contact.Email);
+        $("#email").val(contact.EmailAddress);
       }
       else
       {
@@ -197,16 +197,21 @@
       formValidation();
 
       $("#editButton").on("click", function(){
-        if(key == ""){
-          key = contact.FullName.substring(0,1) + Date.now();
-        }
-
-        contact.FullName = $("#fullName").val();
-        contact.FullName = $("#contactNumber").val();
-        contact.FullName = $("#email").val();
-
-        localStorage.setItem(key, contact.serialize());
-        location.href = "contact-list.html";
+        //if(document.forms[0].checkValidity()){
+          //create new key if emtpy
+          if(key == ""){
+            key = contact.FullName.substring(0,1) + Date.now();
+          }
+          
+          //copy contact info into form to contact object
+          contact.FullName = $("#fullName").val();
+          contact.ContactNumber = $("#contactNumber").val();
+          contact.EmailAddress = $("#email").val();
+          
+          //add to local storage
+          localStorage.setItem(key, contact.serialize());
+          location.href = "contact-list.html";
+        //}
       });
 
       $("#cancelButton").on("click", function(){

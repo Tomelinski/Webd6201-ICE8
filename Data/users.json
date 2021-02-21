@@ -15,7 +15,7 @@
         {
             "DisplayName":"Admin", 
             "Email":"admin@live.ca",
-            "UserName":"Admin",
+            "Username":"Admin",
             "Password":"admin"
         }
     ]

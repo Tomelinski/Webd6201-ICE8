@@ -130,7 +130,6 @@
     }
 
     function displayContactList() {
-
       if (localStorage.length > 0) {
         let contactList = document.getElementById("contactList");
 
@@ -220,6 +219,53 @@
       });
     }
 
+    function displayLogin(){
+
+
+      let messageArea = $("#messageArea").hide();
+
+      $("#loginButton").on("click", function(){
+        let username = $("#username");
+        let password = $("#password");
+        let success = false;
+        let newUser = new core.User()
+
+        $.get("./Data/users.json", function(data){
+          for (const user of data.users) {
+            if (username.val() == user.Username && password.val() == user.Password) {
+              newUser.fromJSON(user);
+              success = true;
+              break;
+            }
+          }
+
+          if (success) {
+            sessionStorage.setItem("user", newUser.serialize());
+            
+            messageArea.removeAttr("class").hide();
+
+            location.href = "contact-list.html";
+          }
+          else
+          {
+            username.trigger("focus").trigger("select");
+            messageArea.show().addClass("alert alert-danger").text("Error: Invalid login information");
+          }
+        });
+      });
+
+
+      $("#cancelButton").on("click", function(){
+
+        document.forms[0].reset();
+        location.href = "index.html";
+      });
+    }
+
+    function displayRegister(){
+
+    }
+
     switch (document.title) {
       case "Home":
           displayHome();
@@ -239,12 +285,30 @@
       case "Edit":
         displayEdit();
         break;
+      case "Login":
+        displayLogin();
+        break;
+      case "Register":
+        displayRegister();
+        break;
     }
 
+    if (sessionStorage.getItem("user")) {
+      $("#login").html(
+        `<a id="logout" class="nav-link" aria-current="page" href="#"><i class="fas fa-sign-out-alt fa-lg"></i> Logout</a>`
+      );
+
+      $("#logout").on("click", function(){
+        sessionStorage.clear();
+
+        location.href = "login.html";
+      });
+    }
     
   }
 
   window.addEventListener("load", Start);
 
   core.Start = Start;
+
 })(core || (core = {}));

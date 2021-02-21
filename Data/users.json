@@ -2,19 +2,19 @@
     "users":[
         {
             "DisplayName":"Tom Zielinski", 
-            "Email":"tomzielinski@live.ca",
-            "UserName":"Tomek",
+            "EmailAddress":"tomzielinski@live.ca",
+            "Username":"Tomek",
             "Password":"password"
         },
         {
             "DisplayName":"Chantal Zielinski", 
-            "Email":"chantalzielinski@live.ca",
-            "UserName":"Chatelinski",
+            "EmailAddress":"chantalzielinski@live.ca",
+            "Username":"Chatelinski",
             "Password":"password"
         },
         {
             "DisplayName":"Admin", 
-            "Email":"admin@live.ca",
+            "EmailAddress":"admin@live.ca",
             "Username":"Admin",
             "Password":"admin"
         }

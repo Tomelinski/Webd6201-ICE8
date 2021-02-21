@@ -67,7 +67,7 @@
 
     fromJSON(data){
       this.DisplayName = data.DisplayName;
-      this.Username = data.User;
+      this.Username = data.Username;
       this.EmailAddress = data.EmailAddress;
       this.Password = data.Password;
     }

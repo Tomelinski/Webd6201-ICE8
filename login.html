@@ -7,48 +7,51 @@
     <!-- CSS Section -->
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+
     <link rel="stylesheet" href="./Content/app.css">
+    
+    <!-- Check of logged in -->
+    <script src="./Scripts/isLoggedIn.js"></script>
 </head>
 <body>
     <!-- Main Header -->
     <header>
-        <!-- Main Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="index.html">WEBD6201</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- Main Nav -->
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <a class="navbar-brand" href="#">WebD6201</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
+            
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="index.html"><i class="fas fa-home fa-lg"></i> Home</a>
+                    <a class="nav-link active" aria-current="page" href="index.html"><i class="fas fa-home fa-lg"></i> Home</a>
                   </li>
-
+                  
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="about.html"><i class="fas fa-info fa-lg"></i> About Us</a>
+                      <a class="nav-link" aria-current="page" href="about.html"><i class="fas fa-info fa-lg"></i> About Us</a>
                   </li>
-
+  
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="projects.html"><i class="fas fa-cog fa-lg"></i> Projects</a>
+                      <a class="nav-link" aria-current="page" href="project.html"><i class="fas fa-cog fa-lg"></i> Projects</a>
                   </li>
-
+  
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="services.html"><i class="fas fa-map fa-lg"></i> Services</a>
+                      <a class="nav-link" aria-current="page" href="services.html"><i class="fas fa-map fa-lg"></i> Services</a>
                   </li>
-
+  
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="contact.html"><i class="fas fa-phone fa-lg"></i> Contact Us</a>
+                      <a class="nav-link" aria-current="page" href="contact.html"><i class="fas fa-phone fa-lg"></i> Contact Us</a>
                   </li>
-
+  
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="login.html"><i class="fas fa-sign-in fa-lg"></i> Login</a>
+                    <a class="nav-link" aria-current="page" href="login.html"><i class="fas fa-sign-in fa-lg"></i> Login</a>
                   </li>
                 </ul>
               </div>
-            </div>
-          </nav>
-    </header>
+            </nav>
+      </header>
 
     <!-- Main Content -->
     <main class="container" id="mainContent">
@@ -56,13 +59,13 @@
           <div class="offset-md-3 col-md-6 col-sm-12">
                 <div class="login" id="contentArea">
                     <h1 class="display-4">Login</h1>
+                    <div id="messageArea"></div>
                     <form id="loginForm" novalidate>
                       
                       <div class="form-group">
                         <div class="input-group">
-                          <span class="input-group-addon">
-                            <i class="fa fa-user">
-                            </i>
+                          <span class="input-group-text">
+                            <i class="fa fa-user"></i>
                           </span>
                           <input type="text" class="form-control" id="username" name="username"  required
                           value="" placeholder="Enter your username">
@@ -70,19 +73,19 @@
                        
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group mb-2">
                         <div class="input-group">
-                          <span class="input-group-addon">
-                            <i class="fa fa-lock">
-                            </i>
+                          <span class="input-group-text">
+                            <i class="fa fa-lock"> </i>
                           </span>
                           <input type="password" class="form-control" id="password" name="password"  required
                           value="" placeholder="Enter your password">
                         </div>
                        
                       </div>                                        
-                      <div class="text-right">
-                        <button id="submitButton" type="submit" class="btn btn-primary btn-lg">Login</button>
+                      <div class="text-end">
+                        <button id="loginButton" type="button" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
+                        <button id="cancelButton" type="button" class="btn btn-warning"><i class="fas fa-undo"></i> Cancel</button>
                       </div>
                     </form>
                    

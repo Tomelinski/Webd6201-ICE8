@@ -1,0 +1,22 @@
+{
+    "users":[
+        {
+            "DisplayName":"Tom Zielinski", 
+            "Email":"tomzielinski@live.ca",
+            "UserName":"Tomek",
+            "Password":"password"
+        },
+        {
+            "DisplayName":"Chantal Zielinski", 
+            "Email":"chantalzielinski@live.ca",
+            "UserName":"Chatelinski",
+            "Password":"password"
+        },
+        {
+            "DisplayName":"Admin", 
+            "Email":"admin@live.ca",
+            "UserName":"Admin",
+            "Password":"admin"
+        }
+    ]
+}

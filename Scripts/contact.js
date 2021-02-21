@@ -52,17 +52,23 @@
     }
 
     /**
-     *this method returns a json object
+     *this method takes a json object and assigns them to contact info
      *
-     * @return {*} 
+     * @param {object} data
      * @memberof Contact
      */
     toJSON(){
         return{
-            "firstName":this.fullName,
-            "contactNumber":this.contactNumber,
-            "email":this.emailAddress,
+            "FirstName":this.fullName,
+            "ContactNumber":this.contactNumber,
+            "Email":this.emailAddress,
         }
+    }
+
+    fromJSON(data){
+      this.FullName = data.FullName;
+      this.ContactNumber = data.ContactNumber;
+      this.EmailAddress = data.Email;
     }
 
     /**

@@ -130,6 +130,9 @@
     }
 
     function displayContactList() {
+
+      $("#contactListLink").attr("class", "nav-link active");
+
       if (localStorage.length > 0) {
         let contactList = document.getElementById("contactList");
 
@@ -266,6 +269,24 @@
 
     }
 
+    function displayLogout(){
+      if (sessionStorage.getItem("user")) {
+        $("#login").html(
+          `<a id="logout" class="nav-link" aria-current="page" href="#"><i class="fas fa-sign-out-alt fa-lg"></i> Logout</a>`
+        );
+  
+        $("#logout").on("click", function(){
+          sessionStorage.clear();
+  
+          location.href = "login.html";
+        });
+      }
+
+      $(`<li class="nav-item">
+      <a id="contactListLink" class="nav-link" aria-current="page" href="contact-list.html"><i class="fas fa-users fa-lg"></i> Contact List</a>
+      </li>`).insertBefore("#login");
+    }
+
     switch (document.title) {
       case "Home":
           displayHome();
@@ -293,17 +314,7 @@
         break;
     }
 
-    if (sessionStorage.getItem("user")) {
-      $("#login").html(
-        `<a id="logout" class="nav-link" aria-current="page" href="#"><i class="fas fa-sign-out-alt fa-lg"></i> Logout</a>`
-      );
-
-      $("#logout").on("click", function(){
-        sessionStorage.clear();
-
-        location.href = "login.html";
-      });
-    }
+    displayLogout();
     
   }
 

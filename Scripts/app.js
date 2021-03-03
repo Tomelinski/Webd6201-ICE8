@@ -7,32 +7,53 @@
 ((core) => {
   function Start() {
     console.log("App started...");
+/**
+ * inject nav bar into header element and highlight active link
+ *
+ * @param {string} pageName
+ */
+function loadHeader(pageName){
+      //inject header
+      $.get("./Views/components/header.html", function(data){
+        $("header").html(data);
+       // $(`#${pageName}`).addClass("active");
+
+        $("a").on("click", function(){
+          //remove old highlighted link
+          $(`#${activeLink}`).removeClass("active");
+          activeLink = $(this).attr("id");
+          loadContent(activeLink);
+          //highlight new active link
+          $(`#${activeLink}`).addClass("active");
+
+          history.replaceState({}, "", activeLink);
+        });
+      });
+
+    }
+
+    function loadContent(pageName){
+      $.get(`./Views/content/${pageName}.html`, function(data){
+        $("main").html(data);
+      });
+    }
+
+    function loadFooter(){
+      //inject footer
+      $.get("./Views/components/footer.html", function(data){
+        $("footer").html(data);
+      });
+
+    }
 
     function displayHome() {
+      activeLink = "home";
+      history.replaceState({}, "", activeLink);
 
+      loadHeader(activeLink);
+      loadContent(activeLink);
+      loadFooter();
 
-      let paragraphOneText = "Welcome to my ICE site test";
-
-      let paragraphOne = document.getElementById("paragraphOne");
-
-      paragraphOne.textContent = paragraphOneText;
-      paragraphOne.className = "fs-5";
-
-      let newParagraph = document.createElement("p");
-
-      newParagraph.setAttribute("id", "paragraphTwo");
-      newParagraph.textContent = "... and this is Paragraphg two";
-
-      let mainContent = document.getElementsByTagName("main")[0];
-
-      mainContent.appendChild(newParagraph);
-      newParagraph.className = "fs-6";
-
-      let paragraphDiv = document.createElement("div");
-      let paragraphThree = `<p id="paragraphThree" class="fs-7">This is paragraph three</p>`;
-      paragraphDiv.innerHTML = paragraphThree;
-
-      newParagraph.before(paragraphDiv);
     }
     function displayAbout(){
         

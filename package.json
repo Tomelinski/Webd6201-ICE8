@@ -1,9 +1,9 @@
 {
-  "name": "webd6201_ice5",
+  "name": "webd6201_ice6",
   "version": "1.0.0",
-  "description": "Demo for ice 5",
+  "description": "Demo for ice 6",
   "main": "app.js",
-  "repository": "https://github.com/Tomelinski/WebD6201-ICE5.git",
+  "repository": "https://github.com/Tomelinski/WebD6201-ICE6.git",
   "author": "Tomelinski <tomzielinski@live.ca>",
   "license": "MIT",
   "dependencies": {

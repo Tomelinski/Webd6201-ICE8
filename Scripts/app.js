@@ -16,17 +16,17 @@ function loadHeader(pageName){
       //inject header
       $.get("./Views/components/header.html", function(data){
         $("header").html(data);
-       // $(`#${pageName}`).addClass("active");
+        $(`#${pageName}`).addClass("active");
 
         $("a").on("click", function(){
           //remove old highlighted link
-          $(`#${activeLink}`).removeClass("active");
-          activeLink = $(this).attr("id");
-          loadContent(activeLink);
+          $(`#${router.ActiveLink}`).removeClass("active");
+          router.ActiveLink = $(this).attr("id");
+          loadContent(router.ActiveLink);
           //highlight new active link
-          $(`#${activeLink}`).addClass("active");
+          $(`#${router.ActiveLink}`).addClass("active");
 
-          history.replaceState({}, "", activeLink);
+          history.pusheState({}, "", router.ActiveLink);
         });
       });
 
@@ -47,11 +47,10 @@ function loadHeader(pageName){
     }
 
     function displayHome() {
-      activeLink = "home";
-      history.replaceState({}, "", activeLink);
+      router.ActiveLink = "home";
 
-      loadHeader(activeLink);
-      loadContent(activeLink);
+      loadHeader(router.ActiveLink);
+      loadContent(router.ActiveLink);
       loadFooter();
 
     }

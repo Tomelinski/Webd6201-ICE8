@@ -5,8 +5,7 @@
 "use strict";
 
 ((core) => {
-  function Start() {
-    console.log("App started...");
+  
 /**
  * inject nav bar into header element and highlight active link
  *
@@ -22,20 +21,29 @@ function loadHeader(pageName){
           //remove old highlighted link
           $(`#${router.ActiveLink}`).removeClass("active");
           router.ActiveLink = $(this).attr("id");
-          loadContent(router.ActiveLink);
+          loadContent(router.ActiveLink, CallBack(router.ActiveLink));
           //highlight new active link
           $(`#${router.ActiveLink}`).addClass("active");
 
-          history.pusheState({}, "", router.ActiveLink);
+          history.pushState({}, "", router.ActiveLink);
         });
       });
 
     }
 
-    function loadContent(pageName){
+    /**
+     *inject page into content section
+
+     *
+     * @param {string} pageName
+     * @param {function} callback
+     */
+    function loadContent(pageName, callback){
       $.get(`./Views/content/${pageName}.html`, function(data){
         $("main").html(data);
+        callback();
       });
+
     }
 
     function loadFooter(){
@@ -49,11 +57,10 @@ function loadHeader(pageName){
     function displayHome() {
       router.ActiveLink = "home";
 
-      loadHeader(router.ActiveLink);
-      loadContent(router.ActiveLink);
-      loadFooter();
+      
 
     }
+
     function displayAbout(){
         
     }
@@ -151,7 +158,11 @@ function loadHeader(pageName){
 
     function displayContactList() {
 
-      $("#contactListLink").attr("class", "nav-link active");
+      authGuard();
+
+      displayLogout();
+
+      //$("#contactListLink").attr("class", "nav-link");
 
       if (localStorage.length > 0) {
         let contactList = document.getElementById("contactList");
@@ -183,19 +194,19 @@ function loadHeader(pageName){
         contactList.innerHTML = data;
         
         $("button.edit").on("click", function(){
-          location.href = "edit.html#" + $(this).val();
+          location.href = "/edit#" + $(this).val();
         });
         //fix list when deleting
         $("button.delete").on("click", function(){
           if(confirm("Are you sure?")){
             localStorage.removeItem($(this).val());
           }
-          location.href = "contact-list.html";
+          location.href = "/contact-list";
         });
       }
 
       $("#addButton").on("click", function(){
-        location.href = "edit.html";
+        location.href = "/edit";
       });
     }
 
@@ -233,12 +244,12 @@ function loadHeader(pageName){
           
           //add to local storage
           localStorage.setItem(key, contact.serialize());
-          location.href = "contact-list.html";
+          location.href = "/contact-list";
         //}
       });
 
       $("#cancelButton").on("click", function(){
-        location.href = "contact-list.html";
+        location.href = "/contact-list";
       });
     }
 
@@ -267,7 +278,9 @@ function loadHeader(pageName){
             
             messageArea.removeAttr("class").hide();
 
-            location.href = "contact-list.html";
+            //displayLogout();
+
+            location.href = "/contact-list";
           }
           else
           {
@@ -281,7 +294,7 @@ function loadHeader(pageName){
       $("#cancelButton").on("click", function(){
 
         document.forms[0].reset();
-        location.href = "index.html";
+        location.href = "/index";
       });
     }
 
@@ -291,51 +304,70 @@ function loadHeader(pageName){
 
     function displayLogout(){
       if (sessionStorage.getItem("user")) {
-        $("#login").html(
+        $("#loginListItem").html(
           `<a id="logout" class="nav-link" aria-current="page" href="#"><i class="fas fa-sign-out-alt fa-lg"></i> Logout</a>`
         );
   
         $("#logout").on("click", function(){
           sessionStorage.clear();
   
-          location.href = "login.html";
+          location.href = "/login";
         });
+
+        $("a").on("mouseover", function(){
+            $(this).css()
+        });
+        
+        $(`<li class="nav-item">
+        <a id="contact-list" class="nav-link" aria-current="page" href="/contact-list"><i class="fas fa-users fa-lg"></i> Contact List</a>
+        </li>`).insertBefore("#loginListItem");
+
+      }
+      else{
+        $(`<li id="loginListItem" class="nav-item">
+        <a id="login" class="nav-link" aria-current="page" href="#"><i class="fas fa-sign-in-alt fa-lg"></i> Login</a>
+        </li>`).insertBefore("#loginListItem");
       }
 
-      $(`<li class="nav-item">
-      <a id="contactListLink" class="nav-link" aria-current="page" href="contact-list.html"><i class="fas fa-users fa-lg"></i> Contact List</a>
-      </li>`).insertBefore("#login");
     }
 
-    switch (document.title) {
-      case "Home":
-          displayHome();
-        break;
-      case "About":
-        break;
-      case "Contact":
-        displayContact();
-        break;
-      case "Services":
-        break;
-      case "Projects":
-        break;
-      case "Contact-List":
-        displayContactList();
-        break;
-      case "Edit":
-        displayEdit();
-        break;
-      case "Login":
-        displayLogin();
-        break;
-      case "Register":
-        displayRegister();
-        break;
+    function authGuard(){
+      if (!sessionStorage.getItem("user")) {
+        //redirect to login page
+        location.href = "/login";
+      }
     }
 
-    displayLogout();
-    
+    function display404(){
+
+    }
+
+    function CallBack(activeLink){
+      switch (activeLink) {
+        case "home": return displayHome;
+        case "about":  return displayAbout;
+        case "contact": return displayContact;
+        case "services": return displayServices;
+        case "projects": return displayProjects
+        case "contact-list": return displayContactList;
+        case "edit": return displayEdit;
+        case "login": return displayLogin;
+        case "register": return displayRegister;
+        case "404": return display404;
+        default: 
+          break;
+      }
+    }
+
+    function Start() {
+      console.log("App started...");
+
+      loadHeader(router.ActiveLink);
+      loadContent(router.ActiveLink, CallBack(router.ActiveLink));
+      loadFooter();
+
+      
+
   }
 
   window.addEventListener("load", Start);

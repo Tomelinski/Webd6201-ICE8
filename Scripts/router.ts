@@ -1,7 +1,7 @@
 
 
-(function (core) {
-    class Router {
+namespace core {
+    export class Router {
 
         private m_activeLink:string;
         private m_routingTable: string[];
@@ -72,8 +72,7 @@
             return this.m_routingTable.toString()
         }
     }
-    core.Router = Router;
-})(core || (core = {}));
+}
 
 //move code into own file
 let router = new core.Router();

@@ -1,9 +1,9 @@
 
 //contact class
-((core)=>{
+namespace core{
 
 
-  class Contact {
+  export class Contact {
 
     //instance variavles
     private m_fullName:string;
@@ -113,5 +113,4 @@
     }
   }
 
-  core.Contact = Contact;
-})(core || (core = {}));
+}

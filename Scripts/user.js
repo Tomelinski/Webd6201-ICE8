@@ -1,5 +1,6 @@
 "use strict";
-((core) => {
+var core;
+(function (core) {
     class User {
         constructor(displayName = "", username = "", emailAddress = "", password = "") {
             this.m_displayName = displayName;

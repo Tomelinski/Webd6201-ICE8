@@ -1,9 +1,9 @@
 "use strict";
 //User class
-((core)=>{
+namespace core{
 
 
-  class User {
+  export class User {
 
     private m_displayName:string;
     private m_username:string;
@@ -112,5 +112,4 @@ public fromJSON(data:any):void{
     }
   }
 
-  core.User = User;
-})(core || (core = {}));
+}

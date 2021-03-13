@@ -24,7 +24,7 @@ namespace core {
    * @param link 
    * @param data 
    */
-  function highlightActiceLink(link:string):void{
+  function highlightActiveLink(link:string):void{
     //remove old highlighted link
     $(`#${router.ActiveLink}`).removeClass("active");
     
@@ -48,11 +48,10 @@ namespace core {
   function loadLink(link:string, data:string = ""):void{
     
     
-    highlightActiceLink(link);
+    highlightActiveLink(link);
     router.LinkData = data;
     
     loadContent(router.ActiveLink, CallBack(router.ActiveLink));
-
     
     history.pushState({}, "", router.ActiveLink);
   }
@@ -66,8 +65,6 @@ function loadHeader(pageName:string):void{
   //inject header
   $.get("./Views/components/header.html", function(data){
     $("header").html(data);
-
-    //displayLogout();
 
     $(`#${pageName}`).addClass("active");
 
@@ -363,10 +360,9 @@ function loadFooter():void{
         );
 
         
-
         //add contact link if does not exist
         if(!contactListLink){
-          $(`<li id="contactiListLink" class="nav-item">
+          $(`<li id="contactListLink" class="nav-item">
           <a id="contact-list" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
           </li>`).insertBefore("#loginListItem");
 
@@ -388,8 +384,8 @@ function loadFooter():void{
         }
       }
 
-      addLinkEvents()
-      highlightActiceLink(router.ActiveLink);
+      addLinkEvents();
+      highlightActiveLink(router.ActiveLink);
     }
 
     function authGuard():void{

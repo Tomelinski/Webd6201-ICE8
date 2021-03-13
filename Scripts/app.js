@@ -12,7 +12,7 @@ var core;
             $(this).css('cursor', 'pointer');
         });
     }
-    function highlightActiceLink(link) {
+    function highlightActiveLink(link) {
         $(`#${router.ActiveLink}`).removeClass("active");
         if (link == "logout") {
             sessionStorage.clear();
@@ -24,7 +24,7 @@ var core;
         $(`#${router.ActiveLink}`).addClass("active");
     }
     function loadLink(link, data = "") {
-        highlightActiceLink(link);
+        highlightActiveLink(link);
         router.LinkData = data;
         loadContent(router.ActiveLink, CallBack(router.ActiveLink));
         history.pushState({}, "", router.ActiveLink);
@@ -216,7 +216,7 @@ var core;
         if (sessionStorage.getItem("user")) {
             $("#loginListItem").html(`<a id="logout" class="nav-link" aria-current="page" href="#"><i class="fas fa-sign-out-alt fa-lg"></i> Logout</a>`);
             if (!contactListLink) {
-                $(`<li id="contactiListLink" class="nav-item">
+                $(`<li id="contactListLink" class="nav-item">
           <a id="contact-list" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
           </li>`).insertBefore("#loginListItem");
             }
@@ -228,7 +228,7 @@ var core;
             }
         }
         addLinkEvents();
-        highlightActiceLink(router.ActiveLink);
+        highlightActiveLink(router.ActiveLink);
     }
     function authGuard() {
         if (!sessionStorage.getItem("user")) {

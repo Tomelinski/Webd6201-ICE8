@@ -1,16 +1,20 @@
 "use strict";
 var core;
 (function (core) {
+    function loadLink(link) {
+        $(`#${router.ActiveLink}`).removeClass("active");
+        router.ActiveLink = link;
+        loadContent(router.ActiveLink, CallBack(router.ActiveLink));
+        $(`#${router.ActiveLink}`).addClass("active");
+        history.pushState({}, "", router.ActiveLink);
+    }
     function loadHeader(pageName) {
         $.get("./Views/components/header.html", function (data) {
             $("header").html(data);
+            displayLogout();
             $(`#${pageName}`).addClass("active");
             $("a").on("click", function () {
-                $(`#${router.ActiveLink}`).removeClass("active");
-                router.ActiveLink = $(this).attr("id");
-                loadContent(router.ActiveLink, CallBack(router.ActiveLink));
-                $(`#${router.ActiveLink}`).addClass("active");
-                history.pushState({}, "", router.ActiveLink);
+                loadLink($(this).attr("id"));
             });
         });
     }
@@ -93,7 +97,6 @@ var core;
     }
     function displayContactList() {
         authGuard();
-        displayLogout();
         if (localStorage.length > 0) {
             let contactList = document.getElementById("contactList");
             let data;
@@ -121,11 +124,11 @@ var core;
                 if (confirm("Are you sure?")) {
                     localStorage.removeItem($(this).val().toString());
                 }
-                location.href = "/contact-list";
+                loadLink("contact-list");
             });
         }
         $("#addButton").on("click", function () {
-            location.href = "/edit";
+            loadLink("edit");
         });
     }
     function displayEdit() {
@@ -150,10 +153,10 @@ var core;
             contact.ContactNumber = $("#contactNumber").val().toString();
             contact.EmailAddress = $("#email").val().toString();
             localStorage.setItem(key, contact.serialize());
-            location.href = "/contact-list";
+            loadLink("contact-list");
         });
         $("#cancelButton").on("click", function () {
-            location.href = "/contact-list";
+            loadLink("contact-list");
         });
     }
     function displayLogin() {
@@ -174,7 +177,7 @@ var core;
                 if (success) {
                     sessionStorage.setItem("user", newUser.serialize());
                     messageArea.removeAttr("class").hide();
-                    location.href = "/contact-list";
+                    loadLink("contact-list");
                 }
                 else {
                     username.trigger("focus").trigger("select");
@@ -184,7 +187,7 @@ var core;
         });
         $("#cancelButton").on("click", function () {
             document.forms[0].reset();
-            location.href = "/index";
+            loadLink("home");
         });
     }
     function displayRegister() {
@@ -194,7 +197,7 @@ var core;
             $("#loginListItem").html(`<a id="logout" class="nav-link" aria-current="page" href="#"><i class="fas fa-sign-out-alt fa-lg"></i> Logout</a>`);
             $("#logout").on("click", function () {
                 sessionStorage.clear();
-                location.href = "/login";
+                loadLink("login");
             });
             $("#logout").on("mouseover", function () {
                 $(this).css('cursor', 'pointer');
@@ -204,14 +207,12 @@ var core;
         </li>`).insertBefore("#loginListItem");
         }
         else {
-            $(`<li id="loginListItem" class="nav-item">
-        <a id="login" class="nav-link" aria-current="page" href="#"><i class="fas fa-sign-in-alt fa-lg"></i> Login</a>
-        </li>`).insertBefore("#loginListItem");
+            $("#loginListItem").html(`<a id="login" class="nav-link" aria-current="page" href="#"><i class="fas fa-sign-in-alt fa-lg"></i> Login</a>`);
         }
     }
     function authGuard() {
         if (!sessionStorage.getItem("user")) {
-            location.href = "/login";
+            loadLink("login");
         }
     }
     function display404() {

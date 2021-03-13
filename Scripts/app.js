@@ -1,26 +1,45 @@
 "use strict";
 var core;
 (function (core) {
-    function loadLink(link) {
+    function addLinkEvents() {
+        $("ul>li>a").off("click");
+        $("ul>li>a").off("mouseover");
+        $("ul>li>a").on("click", function () {
+            sessionStorage.clear();
+            loadLink($(this).attr("id"));
+        });
+        $("ul>li>a").on("mouseover", function () {
+            $(this).css('cursor', 'pointer');
+        });
+    }
+    function highlightActiceLink(link, data = "") {
         $(`#${router.ActiveLink}`).removeClass("active");
-        router.ActiveLink = link;
-        loadContent(router.ActiveLink, CallBack(router.ActiveLink));
+        if (link == "logout") {
+            sessionStorage.clear();
+            router.ActiveLink = "login";
+        }
+        else {
+            router.ActiveLink = link;
+            router.LinkData = data;
+        }
         $(`#${router.ActiveLink}`).addClass("active");
+    }
+    function loadLink(link, data = "") {
+        highlightActiceLink(link, data);
+        loadContent(router.ActiveLink, CallBack(router.ActiveLink));
         history.pushState({}, "", router.ActiveLink);
     }
     function loadHeader(pageName) {
         $.get("./Views/components/header.html", function (data) {
             $("header").html(data);
-            displayLogout();
             $(`#${pageName}`).addClass("active");
-            $("a").on("click", function () {
-                loadLink($(this).attr("id"));
-            });
+            addLinkEvents();
         });
     }
     function loadContent(pageName, callback) {
         $.get(`./Views/content/${pageName}.html`, function (data) {
             $("main").html(data);
+            displayLogout();
             callback();
         });
     }
@@ -118,7 +137,7 @@ var core;
             }
             contactList.innerHTML = data;
             $("button.edit").on("click", function () {
-                location.href = "/edit#" + $(this).val();
+                loadLink("edit", $(this).val().toString());
             });
             $("button.delete").on("click", function () {
                 if (confirm("Are you sure?")) {
@@ -132,7 +151,7 @@ var core;
         });
     }
     function displayEdit() {
-        let key = location.hash.substring(1);
+        let key = router.LinkData;
         let contact = new core.Contact();
         if (key != "") {
             contact.deserialize(localStorage.getItem(key));
@@ -193,22 +212,22 @@ var core;
     function displayRegister() {
     }
     function displayLogout() {
+        let contactListLink = $("#contactListLink")[0];
         if (sessionStorage.getItem("user")) {
             $("#loginListItem").html(`<a id="logout" class="nav-link" aria-current="page" href="#"><i class="fas fa-sign-out-alt fa-lg"></i> Logout</a>`);
-            $("#logout").on("click", function () {
-                sessionStorage.clear();
-                loadLink("login");
-            });
-            $("#logout").on("mouseover", function () {
-                $(this).css('cursor', 'pointer');
-            });
-            $(`<li class="nav-item">
-        <a id="contact-list" class="nav-link" aria-current="page" href="/contact-list"><i class="fas fa-users fa-lg"></i> Contact List</a>
-        </li>`).insertBefore("#loginListItem");
+            if (!contactListLink) {
+                $(`<li id="contactiListLink" class="nav-item">
+          <a id="contact-list" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
+          </li>`).insertBefore("#loginListItem");
+            }
         }
         else {
             $("#loginListItem").html(`<a id="login" class="nav-link" aria-current="page" href="#"><i class="fas fa-sign-in-alt fa-lg"></i> Login</a>`);
+            if (contactListLink) {
+                $("#contactListLink").remove();
+            }
         }
+        addLinkEvents();
     }
     function authGuard() {
         if (!sessionStorage.getItem("user")) {

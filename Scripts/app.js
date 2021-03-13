@@ -12,7 +12,7 @@ var core;
             $(this).css('cursor', 'pointer');
         });
     }
-    function highlightActiceLink(link, data = "") {
+    function highlightActiceLink(link) {
         $(`#${router.ActiveLink}`).removeClass("active");
         if (link == "logout") {
             sessionStorage.clear();
@@ -20,12 +20,12 @@ var core;
         }
         else {
             router.ActiveLink = link;
-            router.LinkData = data;
         }
         $(`#${router.ActiveLink}`).addClass("active");
     }
     function loadLink(link, data = "") {
-        highlightActiceLink(link, data);
+        highlightActiceLink(link);
+        router.LinkData = data;
         loadContent(router.ActiveLink, CallBack(router.ActiveLink));
         history.pushState({}, "", router.ActiveLink);
     }
@@ -96,7 +96,7 @@ var core;
     }
     function displayContact() {
         formValidation();
-        $("#sendButton").on("click", () => {
+        $("#sendButton").on("click", (event) => {
             let subscribeCheckbox = $("#subsribeCheckBox")[0];
             let fullName = $("#fullName")[0];
             let contactNumber = $("#contactNumber")[0];
@@ -228,6 +228,7 @@ var core;
             }
         }
         addLinkEvents();
+        highlightActiceLink(router.ActiveLink);
     }
     function authGuard() {
         if (!sessionStorage.getItem("user")) {

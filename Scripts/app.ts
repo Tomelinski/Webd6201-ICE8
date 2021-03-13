@@ -24,7 +24,7 @@ namespace core {
    * @param link 
    * @param data 
    */
-  function highlightActiceLink(link:string, data:string = ""):void{
+  function highlightActiceLink(link:string):void{
     //remove old highlighted link
     $(`#${router.ActiveLink}`).removeClass("active");
     
@@ -33,30 +33,31 @@ namespace core {
       router.ActiveLink = "login";
     }else{
       router.ActiveLink = link;
-      router.LinkData = data;
     }
     //highlight new active link
     $(`#${router.ActiveLink}`).addClass("active");
   }
-
-/**
- * this method switches page content relative to the link that is passed into the function
- * optionally, link data can also be passed
- *
- * @param {string} link
- * @param {string} [data=""]
- */
-function loadLink(link:string, data:string = ""):void{
-
   
-  highlightActiceLink(link,data);
-  
-  loadContent(router.ActiveLink, CallBack(router.ActiveLink));
-  
-  history.pushState({}, "", router.ActiveLink);
-}
+  /**
+   * this method switches page content relative to the link that is passed into the function
+   * optionally, link data can also be passed
+   *
+   * @param {string} link
+   * @param {string} [data=""]
+   */
+  function loadLink(link:string, data:string = ""):void{
+    
+    
+    highlightActiceLink(link);
+    router.LinkData = data;
+    
+    loadContent(router.ActiveLink, CallBack(router.ActiveLink));
 
-/**
+    
+    history.pushState({}, "", router.ActiveLink);
+  }
+  
+  /**
  * inject nav bar into header element and highlight active link
  *
  * @param {string} pageName
@@ -174,7 +175,9 @@ function loadFooter():void{
     function displayContact():void{
       formValidation();
 
-      $("#sendButton").on("click", ()=>{
+      $("#sendButton").on("click", (event)=>{
+
+
         let subscribeCheckbox = $("#subsribeCheckBox")[0] as HTMLInputElement;
         let fullName = $("#fullName")[0] as HTMLInputElement;
         let contactNumber = $("#contactNumber")[0] as HTMLInputElement;
@@ -386,7 +389,7 @@ function loadFooter():void{
       }
 
       addLinkEvents()
-
+      highlightActiceLink(router.ActiveLink);
     }
 
     function authGuard():void{

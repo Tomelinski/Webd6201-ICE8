@@ -292,9 +292,10 @@ function loadFooter():void{
           contact.FullName = $("#fullName").val().toString();
           contact.ContactNumber = $("#contactNumber").val().toString();
           contact.EmailAddress = $("#email").val().toString();
-          
-          //add to local storage
-          localStorage.setItem(key, contact.serialize());
+          if (contact.serialize()){
+            //add to local storage
+            localStorage.setItem(key, contact.serialize());
+          }
           loadLink("contact-list");
         //}
       });

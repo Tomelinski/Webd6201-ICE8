@@ -172,7 +172,9 @@ var core;
             contact.FullName = $("#fullName").val().toString();
             contact.ContactNumber = $("#contactNumber").val().toString();
             contact.EmailAddress = $("#email").val().toString();
-            localStorage.setItem(key, contact.serialize());
+            if (contact.serialize()) {
+                localStorage.setItem(key, contact.serialize());
+            }
             loadLink("contact-list");
         });
         $("#cancelButton").on("click", function () {

@@ -63,7 +63,7 @@ namespace core {
  */
 function loadHeader(pageName:string):void{
   //inject header
-  $.get("./Views/components/header.html", function(data){
+  $.get("./components/header.html", function(data){
     $("header").html(data);
 
     $(`#${pageName}`).addClass("active");
@@ -80,7 +80,7 @@ function loadHeader(pageName:string):void{
  * @param {function} callback
  */
 function loadContent(pageName:string, callback:Function):void{
-  $.get(`./Views/content/${pageName}.html`, function(data){
+  $.get(`./content/${pageName}.html`, function(data){
     $("main").html(data);
     displayLogout();
     callback();
@@ -93,7 +93,7 @@ function loadContent(pageName:string, callback:Function):void{
  */
 function loadFooter():void{
       //inject footer
-      $.get("./Views/components/footer.html", function(data){
+      $.get("./components/footer.html", function(data){
         $("footer").html(data);
       });
 
@@ -196,6 +196,7 @@ function loadFooter():void{
               );
             }
           }
+          loadLink("contact");
       });
     }
 
@@ -265,7 +266,7 @@ function loadFooter():void{
 
       let contact = new core.Contact();
 
-      if (key != ""){
+      if (key == undefined && key != ""){
         contact.deserialize(localStorage.getItem(key));
         
         $("#fullName").val(contact.FullName);
@@ -274,7 +275,7 @@ function loadFooter():void{
       }
       else
       {
-        $("main>h1").text("Add Contact");
+        $("main>div>h1").text("Add Contact");
         $("#editButton").html(`<i class="fas fa-plus fa-lg"></i> Add`);
       }
 

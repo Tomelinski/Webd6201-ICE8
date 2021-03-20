@@ -2,7 +2,7 @@
   "name": "webd6201_ice8",
   "version": "1.0.0",
   "description": "Demo for ice 8",
-  "main": "app.js",
+  "main": "index.js",
   "repository": "https://github.com/Tomelinski/WebD6201-ICE8.git",
   "author": "Tomelinski <tomzielinski@live.ca>",
   "license": "MIT",

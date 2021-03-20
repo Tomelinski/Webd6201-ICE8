@@ -30,21 +30,21 @@ var core;
         history.pushState({}, "", router.ActiveLink);
     }
     function loadHeader(pageName) {
-        $.get("./Views/components/header.html", function (data) {
+        $.get("./components/header.html", function (data) {
             $("header").html(data);
             $(`#${pageName}`).addClass("active");
             addLinkEvents();
         });
     }
     function loadContent(pageName, callback) {
-        $.get(`./Views/content/${pageName}.html`, function (data) {
+        $.get(`./content/${pageName}.html`, function (data) {
             $("main").html(data);
             displayLogout();
             callback();
         });
     }
     function loadFooter() {
-        $.get("./Views/components/footer.html", function (data) {
+        $.get("./components/footer.html", function (data) {
             $("footer").html(data);
         });
     }
@@ -108,6 +108,7 @@ var core;
                     localStorage.setItem(key, contact.serialize());
                 }
             }
+            loadLink("contact");
         });
     }
     function displayServices() {
@@ -153,14 +154,14 @@ var core;
     function displayEdit() {
         let key = router.LinkData;
         let contact = new core.Contact();
-        if (key != "") {
+        if (key == undefined && key != "") {
             contact.deserialize(localStorage.getItem(key));
             $("#fullName").val(contact.FullName);
             $("#contactNumber").val(contact.ContactNumber);
             $("#email").val(contact.EmailAddress);
         }
         else {
-            $("main>h1").text("Add Contact");
+            $("main>div>h1").text("Add Contact");
             $("#editButton").html(`<i class="fas fa-plus fa-lg"></i> Add`);
         }
         formValidation();

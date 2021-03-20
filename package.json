@@ -1,18 +1,21 @@
 {
-  "name": "webd6201_ice7",
+  "name": "webd6201_ice8",
   "version": "1.0.0",
-  "description": "Demo for ice 7",
+  "description": "Demo for ice 8",
   "main": "app.js",
-  "repository": "https://github.com/Tomelinski/WebD6201-ICE7.git",
+  "repository": "https://github.com/Tomelinski/WebD6201-ICE8.git",
   "author": "Tomelinski <tomzielinski@live.ca>",
   "license": "MIT",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@popperjs/core": "^2.6.0",
     "bootstrap": "^5.0.0-beta1",
+    "express": "^4.17.1",
     "jquery": "^3.5.1"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.5"
+    "@types/jquery": "^3.5.5",
+    "@types/express": "^4.17.11",
+    "@types/node": "^14.14.35"
   }
 }

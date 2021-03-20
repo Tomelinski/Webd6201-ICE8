@@ -6,6 +6,13 @@
   "repository": "https://github.com/Tomelinski/WebD6201-ICE8.git",
   "author": "Tomelinski <tomzielinski@live.ca>",
   "license": "MIT",
+  "engines": {
+    "node": "^14.0.0",
+    "npm": "^6.1.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@popperjs/core": "^2.6.0",
